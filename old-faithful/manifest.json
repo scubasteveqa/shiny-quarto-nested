@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "locale": "en_US",
+  "platform": "4.5.1",
+  "metadata": {
+    "appmode": "static",
+    "primary_rmd": null,
+    "primary_html": "old-faithful/shiny-old-faithful.html",
+    "content_category": null,
+    "has_parameters": false
+  },
+  "packages": null,
+  "files": {
+    "old-faithful/shiny-old-faithful_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css": {
+      "checksum": "81267100e462c21b3d6c0d5bf76a3417"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/bootstrap/bootstrap-icons.css": {
+      "checksum": "2318f137d201fbf51601fa0faba6bef7"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/bootstrap/bootstrap-icons.woff": {
+      "checksum": "1a51dfbe5467607389d603c02a77cd10"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/bootstrap/bootstrap.min.js": {
+      "checksum": "e2b09c06f0e714b6144a6788a28e3950"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/clipboard/clipboard.min.js": {
+      "checksum": "15f52a1ee547f2bdd46e56747332ca2d"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/quarto-html/anchor.min.js": {
+      "checksum": "91bcf6cd1fd88fec3f109811e5fc3546"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/quarto-html/popper.min.js": {
+      "checksum": "3a4a291ccf3f1ea0f82b641542fd3827"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css": {
+      "checksum": "ea385d0e468b0dd5ea5bf0780b1290d9"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/quarto-html/quarto.js": {
+      "checksum": "6f4245742deb3cc92337dbe2701ccfe1"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/quarto-html/tabsets/tabsets.js": {
+      "checksum": "e8d6a8862b33ccc461f8fd532e05b365"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/quarto-html/tippy.css": {
+      "checksum": "ebd6f8ce46a677e1a4f5f8a8317109a9"
+    },
+    "old-faithful/shiny-old-faithful_files/libs/quarto-html/tippy.umd.min.js": {
+      "checksum": "d828775275749701b48bd9d958814111"
+    },
+    "old-faithful/shiny-old-faithful.html": {
+      "checksum": "fae35ae2e324ab71803f75370187b3b0"
+    },
+    "old-faithful/shiny-old-faithful.qmd": {
+      "checksum": "3999e93c095512a76c80b8303cff9961"
+    }
+  },
+  "users": null
+}
