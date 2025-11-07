@@ -1,0 +1,149 @@
+---
+title: "Interactive Data Explorer with Shiny"
+format: html
+server: shiny
+---
+
+```{python}
+#| context: setup
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from shiny import ui, render, reactive
+import seaborn as sns
+
+# Create sample data
+np.random.seed(42)
+data = pd.DataFrame({
+    'x': np.random.randn(100),
+    'y': np.random.randn(100),
+    'category': np.random.choice(['A', 'B', 'C'], 100),
+    'value': np.random.randint(1, 100, 100)
+})
+```
+
+## Interactive Data Visualization
+
+This Quarto document demonstrates how to embed Shiny components for interactive data exploration.
+
+```{python}
+#| panel: sidebar
+ui.input_select(
+    "category_filter", 
+    "Select Category:",
+    choices=['All'] + list(data['category'].unique()),
+    selected='All'
+)
+
+ui.input_slider(
+    "sample_size", 
+    "Sample Size:",
+    min=10, 
+    max=100, 
+    value=50
+)
+
+ui.input_radio_buttons(
+    "plot_type",
+    "Plot Type:",
+    choices={
+        "scatter": "Scatter Plot",
+        "histogram": "Histogram",
+        "boxplot": "Box Plot"
+    },
+    selected="scatter"
+)
+```
+
+```{python}
+#| panel: fill
+@render.plot
+def interactive_plot():
+    # Filter data based on category selection
+    if input.category_filter() == 'All':
+        filtered_data = data.sample(n=input.sample_size())
+    else:
+        filtered_data = data[data['category'] == input.category_filter()].sample(
+            n=min(input.sample_size(), len(data[data['category'] == input.category_filter()]))
+        )
+    
+    fig, ax = plt.subplots(figsize=(8, 6))
+    
+    if input.plot_type() == "scatter":
+        scatter = ax.scatter(filtered_data['x'], filtered_data['y'], 
+                           c=filtered_data['value'], 
+                           cmap='viridis', alpha=0.7)
+        ax.set_xlabel('X Values')
+        ax.set_ylabel('Y Values')
+        ax.set_title(f'Scatter Plot - {input.category_filter()} (n={len(filtered_data)})')
+        plt.colorbar(scatter, ax=ax, label='Value')
+        
+    elif input.plot_type() == "histogram":
+        ax.hist(filtered_data['value'], bins=15, alpha=0.7, color='skyblue', edgecolor='black')
+        ax.set_xlabel('Value')
+        ax.set_ylabel('Frequency')
+        ax.set_title(f'Histogram - {input.category_filter()} (n={len(filtered_data)})')
+        
+    elif input.plot_type() == "boxplot":
+        if input.category_filter() == 'All':
+            sns.boxplot(data=filtered_data, x='category', y='value', ax=ax)
+            ax.set_title(f'Box Plot by Category (n={len(filtered_data)})')
+        else:
+            ax.boxplot(filtered_data['value'])
+            ax.set_xticklabels([input.category_filter()])
+            ax.set_ylabel('Value')
+            ax.set_title(f'Box Plot - {input.category_filter()} (n={len(filtered_data)})')
+    
+    plt.tight_layout()
+    return fig
+```
+
+## Data Summary
+
+```{python}
+@render.table
+def data_summary():
+    if input.category_filter() == 'All':
+        filtered_data = data.sample(n=input.sample_size())
+    else:
+        filtered_data = data[data['category'] == input.category_filter()].sample(
+            n=min(input.sample_size(), len(data[data['category'] == input.category_filter()]))
+        )
+    
+    summary = filtered_data.describe()
+    return summary
+
+@render.text
+def sample_info():
+    if input.category_filter() == 'All':
+        available = len(data)
+    else:
+        available = len(data[data['category'] == input.category_filter()])
+    
+    return f"Showing {min(input.sample_size(), available)} of {available} available records for category: {input.category_filter()}"
+```
+
+## Static Content
+
+You can mix interactive Shiny components with regular Quarto content. Here's some static analysis:
+
+```{python}
+# Static plot
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+# Distribution by category
+data.groupby('category')['value'].mean().plot(kind='bar', ax=ax1, color=['red', 'green', 'blue'])
+ax1.set_title('Average Value by Category')
+ax1.set_ylabel('Average Value')
+
+# Correlation plot
+ax2.scatter(data['x'], data['y'], alpha=0.6)
+ax2.set_xlabel('X Values')
+ax2.set_ylabel('Y Values')
+ax2.set_title('X vs Y Correlation')
+
+plt.tight_layout()
+plt.show()
+```
+
+The correlation between X and Y is: **{python} f"{data['x'].corr(data['y']):.3f}"`**
