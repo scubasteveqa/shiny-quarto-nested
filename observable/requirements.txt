@@ -1,5 +1,5 @@
-setuptools>=65.0.0
-shiny>=0.6.0
-uvicorn[standard]>=0.18.0
-fastapi>=0.68.0
+setuptools
+shiny
+uvicorn
+fastapi
 jupyter-core
